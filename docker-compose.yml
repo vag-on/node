@@ -3,7 +3,6 @@ services:
     image: remnawave/node:latest
     container_name: remnanode
     hostname: remnanode
-    network_mode: host
     restart: always
     cap_add:
       - NET_ADMIN
