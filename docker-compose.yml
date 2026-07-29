@@ -10,4 +10,3 @@ services:
         hard: 1048576
     environment:
       - NODE_PORT=2222
-      - SECRET_KEY=""
