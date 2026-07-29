@@ -3,7 +3,10 @@ services:
     image: nginx:1.28
     container_name: remnawave-nginx
     hostname: remnawave-nginx
-    <<: [*common, *logging]
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - /dev/shm:/dev/shm:rw
+      - /var/www/html:/var/www/html:ro
     command: sh -c 'rm -f /dev/shm/nginx.sock && exec nginx -g "daemon off;"'
   remnanode:
     image: remnawave/node:latest
@@ -19,3 +22,5 @@ services:
     environment:
       - NODE_PORT=2222
       - SECRET_KEY=${example_var}
+    volumes:
+      - /dev/shm:/dev/shm:rw
