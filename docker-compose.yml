@@ -1,6 +1,6 @@
 services:
   remnawave-nginx:
-    image: nginx:1.28
+    image: nginx:1.28.0
     container_name: remnawave-nginx
     hostname: remnawave-nginx
     volumes:
@@ -9,7 +9,7 @@ services:
       - /var/www/html:/var/www/html:ro
     command: sh -c 'rm -f /dev/shm/nginx.sock && exec nginx -g "daemon off;"'
   remnanode:
-    image: remnawave/node:latest
+    image: remnawave/node:2.8.0
     container_name: remnanode
     hostname: remnanode
     restart: always
