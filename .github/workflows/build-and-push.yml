@@ -10,9 +10,6 @@ jobs:
     name: Send Telegram message
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source code
-        uses: actions/checkout@v2
-
       - name: Send Telegram message
         uses: appleboy/telegram-action@master
         with:
@@ -67,6 +64,8 @@ jobs:
           context: .
           file: Dockerfile
           platforms: ${{ matrix.platform }}
+          cache-from: type=gha,scope=node-${{ matrix.platform }}-release
+          cache-to: type=gha,mode=max,scope=node-${{ matrix.platform }}-release
           outputs: |
             type=image,"name=remnawave/node,ghcr.io/remnawave/node",push-by-digest=true,name-canonical=true,push=true
 
@@ -166,9 +165,6 @@ jobs:
     needs: [merge, create-release]
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source code
-        uses: actions/checkout@v2
-
       - name: Send Telegram message
         uses: appleboy/telegram-action@master
         with:
@@ -185,9 +181,6 @@ jobs:
     needs: [build-docker-images, merge]
     if: failure()
     steps:
-      - name: Checkout source code
-        uses: actions/checkout@v2
-
       - name: Send error notification
         uses: appleboy/telegram-action@master
         with:
