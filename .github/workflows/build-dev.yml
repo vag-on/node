@@ -14,9 +14,6 @@ jobs:
     name: Send TG message
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source code
-        uses: actions/checkout@v2
-
       - name: Send Telegram message
         uses: proDreams/actions-telegram-notifier@main
         with:
@@ -63,6 +60,8 @@ jobs:
           context: .
           file: Dockerfile
           platforms: ${{ matrix.platform }}
+          cache-from: type=gha,scope=node-${{ matrix.platform }}-dev
+          cache-to: type=gha,mode=max,scope=node-${{ matrix.platform }}-dev
           outputs: type=image,name=${{ env.REGISTRY_IMAGE }},push-by-digest=true,name-canonical=true,push=true
 
       - name: Export digest
@@ -114,9 +113,6 @@ jobs:
     needs: [merge]
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source code
-        uses: actions/checkout@v2
-
       - name: Send Telegram message
         uses: proDreams/actions-telegram-notifier@main
         with:
@@ -132,9 +128,6 @@ jobs:
     needs: [build-docker-images, merge]
     if: failure()
     steps:
-      - name: Checkout source code
-        uses: actions/checkout@v2
-
       - name: Send error notification
         uses: proDreams/actions-telegram-notifier@main
         with:
