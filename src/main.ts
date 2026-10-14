@@ -72,7 +72,7 @@ async function bootstrap(): Promise<void> {
 
     app.use(
         bodyParser.json({
-            limit: '1000mb',
+            limit: '10mb',
         }),
     );
 
@@ -106,7 +106,7 @@ async function bootstrap(): Promise<void> {
     const httpServer = httpAdapter.getInstance();
 
     const internalApp = express();
-    internalApp.use(json({ limit: '1000mb' }));
+    internalApp.use(json({ limit: '10mb' }));
 
     // '/' + REST_API.VISION.BLOCK_IP, '/' + REST_API.VISION.UNBLOCK_IP
     internalApp.use(
